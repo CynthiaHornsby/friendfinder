@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html lang="us/en">
+
+<header>
+
+  <title>Friend Finder App</title>
+  <meta charset="UTF8">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</header>
+
+<body>
+
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="row">
+
+        <p><b>About You:</b></p>
+        <form>
+          <div class="form-group">
+            <label for="Name">Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Photo:</label>
+            <input type="text" class="form-control" id="photo" placeholder="Photo Link">
+          </div>
+        </form>
+
+        <p><b>Survey Questions</b></p>
+        Question 1:
+        <p>You enjoy a challenge.</p>
+        <select class="form-control form">
+                  <option value="1">Strongly Disagree 1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>Strongly Agree 5</option>
+                </select>
+        <br> Question 2:
+        <p>You like order and structure.</p>
+        <select class="form-control form2">
+                  <option value="1">Strongly Disagree 1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>Strongly Agree 5</option>
+                </select>
+        <br> Question 3:
+        <p>You enjoy daydreaming and fantasy.</p>
+        <select class="form-control form3">
+                  <option value="1">Strongly Disagree 1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>Strongly Agree 5</option>
+                </select>
+        <br> Question 4:
+        <p>Your mindset can make anything possible.</p>
+        <select class="form-control form4">
+                  <option value="1">Strongly Disagree 1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>Strongly Agree 5</option>
+                </select>
+        <br> Question 5:
+        <p>I enjoy research and hearing opposing perspectives.</p>
+        <select class="form-control form5">
+                  <option value="1">Strongly Disagree 1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>Strongly Agree 5</option>
+                </select>
+
+        <br> Question 6:
+        <p>I'm comfortable in large crowds, or find them enjoyable.</p>
+        <select class="form-control form6">
+                  <option value="1">Strongly Disagree 1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>Strongly Agree 5</option>
+                </select>
+        <br> Question 7:
+        <p>I prefer spending time at home.</p>
+        <select class="form-control form7">
+                  <option value="1">Strongly Disagree 1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>Strongly Agree 5</option>
+                </select>
+        <br> Question 8:
+        <p>Trying new things is enjoyable.</p>
+        <select class="form-control form8">
+                  <option value="1">Strongly Disagree 1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>Strongly Agree 5</option>
+                </select>
+        <br> Question 9:
+        <p>Mistakes are the path to success.</p>
+        <select class="form-control form9">
+                  <option value="1">Strongly Disagree 1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>Strongly Agree 5</option>
+                </select>
+        <br> Question 10:
+        <p>Traveling is a goal.</p>
+        <select class="form-control form10">
+                  <option value="1">Strongly Disagree 1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>Strongly Agree 5</option>
+                </select>
+
+        <br>
+
+
+        <button type="button" class="btn btn-primary" id="submitting" data-toggle="modal" data-target=".bs-example-modal-sm">Submit</button>
+
+        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <p id="nameresult"> </p>
+              <img src="" id="image" height="200" width="200">
+            </div>
+          </div>
+        </div><br><br>
+
+        <a href="/">Home Page</a>
+        <a href="/survey">Survey</a>
+        <br><br>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $("#submitting").on("click", function(event) {
+
+      var friend = {
+
+        name: $("#name").val().trim(),
+        photo: $("#photo").val().trim(),
+        scores: [
+          $(".form").val(),
+          $(".form2").val(),
+          $(".form3").val(),
+          $(".form4").val(),
+          $(".form5").val(),
+          $(".form6").val(),
+          $(".form7").val(),
+          $(".form8").val(),
+          $(".form9").val(),
+          $(".form10").val()
+        ]
+      };
+
+      console.log(friend);
+
+
+      $.post("/api/friends", friend)
+        .done(function(data) {
+          console.log(data);
+
+
+          $("#nameresult").text("Your best match is " + data.nameMatch + " !");
+          $("#image").attr("src", data.photo);
+
+        });
+
+
+
+    });
+  </script>
+
+</body>
+
+</html>
